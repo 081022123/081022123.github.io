@@ -1,154 +1,138 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>郭嘉豪制作的流量查询系统</title>
-    <link href="http://www.un10646.com/css/default-v2.css" rel="stylesheet" type="text/css">
-    <link href="http://www.un10646.com/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="http://www.un10646.com/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="http://www.un10646.com/css/ui-dialog.css" type="text/css">
-    <script src="http://www.un10646.com/Scripts/jquery/jquery-1.10.2.min.js"></script>
-    <script src="http://www.un10646.com/Scripts/dialog-min.js"></script>
-    <style type="text/css">
-        <!--
-        .iccid-div {
-            height: 150px;
-        }
-        -->
-    </style>
-    <script type="text/javascript">
-        $(function () {
-            $("#search_btn").click(function () {
-                var search_id = $("#search_id").val();
-                var search_id_reg = /^(\d|X|x){11,20}$/;
-                var b = null;
-                if (search_id == '') {
-                    alert("请输入查询条件");
-                    return false;
-                } else if (!search_id_reg.test(search_id)) {
-                    alert('格式错误');
-                    return false;
-                } else {
-                    $(".tip-div").css("display", "none");
-                    $.ajax({
-                        "url": "http://www.un10646.com/tools/common.ashx?action=get_cardInfo",
-                        "data": {
-                            search_id: search_id
-                        },
-                        "type": "post",
-                        "dataType": "json",
-                        "success": function (data) {
-                            b.close();
-                            if (data.status == 'y') {
-                                $("#card_number").val(data.card_number);
-
-                                var bind_div_info = "<div>真实姓名：" + data.real_name + "</div>"
-                                                  + "<div>身份证号：" + data.id_number + "</div>"
-                                                  + "<div>备 卡 号：" + data.card_number.substr(0, 19) + "</div>"
-                                                  + "<div>手 机 号：" + data.phone + "</div>";
-                                var account_info = '<div class="iccid-info-div">';
-
-                                var account_info = account_info + '<span class="account-info-title">当前套餐</span>'
-                                 + '<span class="account-info-mark">：</span>'
-                                 + '<span class="account-info-value">' + data.package + '</span><p></p>'
-                                 + '<span class="account-info-title">剩余流量</span>'
-                                 + '<span class="account-info-mark">：</span>'
-                                 + '<span class="account-info-value">' + data.balances + 'MB</span><p></p>';
-                                if (data.invalid_time != '') {//是否显示有效期
-                                    account_info = account_info + '<span class="account-info-title">有效期</span>'
-                                    + '<span class="account-info-mark">：</span>'
-                                    + '<span class="account-info-value">' + data.invalid_time + '</span><p></p>';
-                                    $(".iccid-div").css("height", "200");
-                                } else {
-                                    $(".iccid-div").css("height", "150");
-                                }
-                                account_info = account_info + '<span class="account-info-title">当前状态</span>'
-                                + '<span class="account-info-mark">：</span>'
-                                + '<span class="account-info-value">' + data.state + '</span>';
-
-                                var account_info = account_info + '</div>';
-
-                                $(".bind-info-div").html(bind_div_info);
-                                $(".iccid-div").css("display", "block");
-                                $(".iccid-div").html(account_info);
-                            } else {
-                                b = dialog({ title: '提示', content: data.msg }).showModal();
-                                setTimeout(function () {
-                                    b.close().remove();
-                                }, 2000);
-                                $(".bind-info-div").html("");
-                                $(".iccid-div").css("display", "none");
-                                $(".iccid-div").html("");
-                            }
-                        },
-                        "beforeSend": function () {
-                            b = dialog({ title: '提示', content: '<span class="ui-dialog-loading">Loading..</span>正在查询中......请稍等！' }).showModal();
-                        },
-                        "error": function () {
-
-                            b.close();
-
-                            $(".bind-info-div").html("<div>查询失败,请重新查询</div>");
-
-                            $(".iccid-div").css("display", "none");
-
-                            $(".iccid-div").html("");
-
-                        }
-                    });
-                }
-            });
-          
-        });
-    </script>
+<title>郭嘉豪的个人主页</title>
+<!--Custom Theme files-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--Custom Theme files-->
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link type="text/css" rel="stylesheet" href="css/jquery.mmenu.all.css?v=5.4.4" />
+<!--//Custom Theme files-->
+<!--web-fonts-->
+<link href='http://fonts.useso.com/css?family=Jura:400,300,500,600' rel='stylesheet' type='text/css'>
+<!--//web-fonts-->
+<!--js-->
+<script src="js/jquery-1.11.1.min.js"></script> 
+<script type="text/javascript" src="js/jquery.mmenu.min.all.js?v=5.4.4"></script>
+<!-- //js -->
 </head>
 <body>
-   
-    <table width="100%" cellspacing="0" cellpadding="0" border="0" height="80" align="center" vertical-align="middle" style="background:#CD3333;">
-        <tbody>
-            <tr>
-                <td width="100%" align="center"><span style="color:#FFFFFF;font-size:35px;font-weight:bold;">嘉豪流量查询系统欢迎您</span></td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="menu-table" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#006699" background="http://www.un10646.com/images/gebj.jpg" height="70" align="center" vertical-align="middle">
-</table>
-    <!-- <p style="text-align:center;">出账期，暂停查询流量余额</p> -->
-    <p></p>
-    <p style="text-indent:2em;color:#FF0000;font-weight:bold;">公告：欢迎访问嘉豪流量查询系统V3.0，现在已升级图形界面第二代。可以更方便大家查询流量。由于资金缺乏，也就只能开发成这样。豪豪一个人开发不容易,多多支持。欢迎加我微信：bb19991112   有问题欢迎咨询。</p>
-    <p></p>
-    <div class="search-div" id="search-ciid">
-        <input name="search_id" id="search_id" type="text" class="search-id-input" placeholder="请输入上网卡卡号" size="20">
-        <button type="submit" name="button" id="search_btn" class="btn btn-primary">查询充值</button>
-        <!--<a href="javascript:void(0);" id="search_btn"><img src="http://www.un10646.com/Public/Index/image/chaxun.png" alt="gd" width="60"/></a>-->
-    </div>
-    <p class="text-center" style="margin-top:15px;"><span class="label" style="background:#2e6da4">注意！</span><code>输入ICCID号不要输入字母</code></p>
-    <div class="tip-div">
-        <p style="color:#FF0000;font-weight:bold;">温馨提示：</p>
-        <p>一、 流量上网卡，建议向购买商进行实名激活，以便于日后办理业务。</p>
-        <p>二、更换设备卡会自动锁定！充值一次流量会自动激活。</p>
-        <p>三、卡激活后30天未使用，卡会自动锁定，充值一次自动激活。</p>
-        <p>四、充值成功后一般为半年有效期，特大套餐可以支持到一年以上，详情各地咨询经销商。</p>
-        <p>五、如想购买上网卡欢迎加我的微信号:bb19991112，很优惠哦。</p>
-        <p>六、营运负责人：郭嘉豪，开发人员：郭嘉豪。</p>
-        
-    </div>
-    <div class="content">
-        <div class="bind-info-div">
+		<div class=" mm-wrapper"  id="page">
+			<div class="push-menu ">
+				<div class="banner">
+					<div class="header-top">
+						<ul>
+							<li><span></span></li>
+							<li><span class="chrg"></span> </li>
+							<li>制作人:郭嘉豪 </li>
+						</ul>
+					</div>
+					<div class="banner-text">
+						<div class="menu">
+							<a href="#menu"><img src="images/menu-icon.png" alt=""/></a>
+							<nav id="menu">
+								<ul class="">
+									<li class="menu-title"><strong>菜单</strong></li>
+									<li><a href="#"><span class="icons"> </span>分享朋友有优惠</a></li>
+									<li><a href="#http://baid.us/bubble"><span class="icons icn3"> </span>流量查询 </a></li>
+									<li><a href="#http://baid.us/bubble"><span class="icons icn4"> </span> 充值卡密充值</a></li>
+									<li><a href="images/00.png"><span class="icons icn5"> </span> 联系我们</a></li>
+								</ul> 	
+							</nav>
+								<script type="text/javascript">
+									$(function() {
+										$("#menu")
+											.mmenu({
+								extensions 	: [ "theme-dark", "effect-listitems-slide" ],
+								iconPanels	: {
+									add 		: true,
+									visible		: 1
+								},
+								navbar		: {
+									add 		: false
+								},
+								counters	: true
+											}).on( 'click',
+												'a[href^="#/"]',
+												function() {
+													alert( "Thank you for clicking, but that's a demo link." );
+													return false;
+												}
+											);
+									});
+								</script>
+							<!-- /script-for-menu -->
+						</div>
+						<div class="title">
+							<div class="title-left">
+								<img src="images/img1.jpg" alt=""/>
+							</div>
+							<div class="title-right">
+							  <h2>嘉豪流量查询系统</h2>
+							  <h6>欢迎访问主页</h6>
+							</div>
+							<div class="clear"> </div>
+						</div>
+					</div>
+				</div>
+				<div class="clear"> </div>
+				<div class="banner-bottom">
+				  <div class="banner-bottom-left">
+					  <a href="http://baid.us/bubble">
+					  <h3>流量查询</h3>
+				    
+				      <p>即时查询流量服务 </p>
+				    </a>				    </div>
+				  <div class="banner-bottom-right">
+						<a href="images/00.png">
+						<h3>流量充值</h3>
+						<p>请联系购买商，自动充值暂时未开发，充值成功后24小时到账 </p>
+					</a>					</div>
+					<div class="clear"> </div>
+				</div>
+                <div class="clear"> </div>
+                
+                
+                
+				<div class="work-text">
+					<h3>公告:</h3>
+					<section class="ac-container">
+						<div>
+							<input id="ac-1" name="accordion-1" type="checkbox" />
+							<label for="ac-1" class="grid1"><i></i>如何购买我们的上网卡？</label>
+							<article class="ac-small">
+								<p>如想购买上网卡欢迎加我的微信号:bb19991112，有优惠哦。</p>
+							</article>
+						</div>
+						<div>
+							<input id="ac-2" name="accordion-1" type="checkbox" />
+							<label for="ac-2" class="grid2"><i></i>上网卡特点</label>
+							<article class="ac-small">
+								<p>我们的上网卡特点是0月租，没有捆绑收费，流量半年不清零，卡本身有效日期是永久，流量价格便宜。</p>
+							</article>
+						</div>
+						<div>
+							<input id="ac-3" name="accordion-1" type="checkbox" />
+							<label for="ac-3" class="grid3"><i></i>流量资费对比</label>
+							<article class="ac-small">
+								<p>我们的流量收费：1G / 19 元，联通的流量收费：1G / 40 元</p>
+							</article>
+						</div>
+						<div>
+							<input id="ac-4" name="accordion-1" type="checkbox" />
+							<label for="ac-4" class="grid4"><i></i>联系我们</label>
+							<article class="ac-small">
+								<p>营运负责人：郭嘉豪，开发人员：郭嘉豪。欢迎加我微信：bb19991112 有问题欢迎咨询。
 
-        </div>
-        <div class="iccid-div" style="display:none;">
-            <div class="iccid-info-div">
-                <span class="account-info-title">当前套餐</span>
-                <span class="account-info-mark">：</span>
-                <span class="account-info-value">48G</span>&nbsp;&nbsp;
-                <span class="account-info-title">流量余额</span>
-                <span class="account-info-mark">：</span>
-                <span class="account-info-value">100G</span>&nbsp;&nbsp;
-            </div>
-        </div>
-         
-    </div>
-     
+</p>
+							</article>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
 </body>
 </html>
