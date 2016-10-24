@@ -21,24 +21,6 @@ $('iframe[src*="youtube.com"]').wrap('<div class="youtubecontent" />');
 </script>
 
 
-.video-container {
- position: relative;
- padding-bottom: 56.25%;
- padding-top: 30px;
- height: 0;
- overflow: hidden;
-}
-.video-container iframe,
-.video-container object,
-.video-container embed {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
-}
-
-
    
     <style type="text/css">
         <!--
@@ -119,7 +101,29 @@ $('iframe[src*="youtube.com"]').wrap('<div class="youtubecontent" />');
 <p>附上英文网上阅读方法：</p>
 <a href='https://youtu.be/mgTnAiET6nY'><font>youtube观看地址：</font></a>
 
-<div class="video-container">
+<div class="video-container/css">
+
+
+ <!--
+.video-container {
+ position: relative;
+ padding-bottom: 56.25%;
+ padding-top: 30px;
+ height: 0;
+ overflow: hidden;
+}
+.video-container iframe,
+.video-container object,
+.video-container embed {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+}
+
+ -->
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ATAKVUjYyWM" frameborder="0" allowfullscreen></iframe>
 </div>
 
