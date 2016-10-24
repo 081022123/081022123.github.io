@@ -93,7 +93,37 @@
 <p></p>
 <p>附上英文网上阅读方法：</p>
 <a href='https://youtu.be/mgTnAiET6nY'><font>youtube观看地址：</font></a>
+
+<script>
+$(function() {
+  if(typeof YOUTUBE_VIDEO_MARGIN == 'undefined') {
+    YOUTUBE_VIDEO_MARGIN=5;
+  }
+  $('iframe').each(function(index,item) {
+    if($(item).attr('src').match(/http(s)?:\/\/www\.youtube\.com/)) {
+      var w=$(item).attr('width');
+      var h=$(item).attr('height');
+      var ar = h/w*100;
+      ar=ar.toFixed(2);
+      //Style iframe   
+      $(item).css('position','absolute');
+      $(item).css('top','0');
+      $(item).css('left','0');   
+      $(item).css('width','100%');
+      $(item).css('height','100%');
+      $(item).css('max-width',w+'px');
+      $(item).css('max-height', h+'px');       
+      $(item).wrap('<div style="max-width:'+w+'px;margin:0 auto; padding:'+YOUTUBE_VIDEO_MARGIN+'px;" />');
+      $(item).wrap('<div style="position: relative;padding-bottom: '+ar+'%; height: 0; overflow: hidden;" />');
+    }
+  });
+});
+
 <iframe width="auto" height="315" src="https://www.youtube.com/embed/ATAKVUjYyWM" frameborder="0" allowfullscreen></iframe>
+
+</script>
+
+
 <p>不好意思，放错视频了~</p>
 <p>网址:https://youtu.be/mgTnAiET6nY</p>
 <p> </p>
