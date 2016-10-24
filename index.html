@@ -12,6 +12,19 @@
     <link rel="stylesheet" href="/css/ui-dialog.css" type="text/css" >
     <script src="Scripts/jquery/jquery-1.10.2.min.js"></script>
     <script src="/Scripts/dialog-min.js"></script>
+
+
+<iframe src="index.html" id="iframepage" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" onLoad="iFrameHeight()"></iframe>
+<script type="text/javascript" language="javascript">   
+function iFrameHeight() {   
+var ifm= document.getElementById("iframepage");   
+var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;   
+if(ifm != null && subWeb != null) {
+   ifm.height = subWeb.body.scrollHeight;
+   ifm.width = subWeb.body.scrollWidth;
+}   
+}   
+</script>
    
     <style type="text/css">
         <!--
